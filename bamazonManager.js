@@ -98,7 +98,18 @@ managerInput = function() {
                         name: "quantity"
                     }
                 ]).then(function(inquirerResponse) {
-                    console.log(inquirerResponse.price);
+                    query = "insert into bamazon.products set ? ";
+                    updateObj = [{
+                        product_name: inquirerResponse.ProductName,
+                        department_name: inquirerResponse.DeptName,
+                        price: inquirerResponse.Price,
+                        stock_quantity: inquirerResponse.quantity,
+                    }];
+                    process.stdout.write('\x1Bc');
+                    runQuery(query, updateObj, false);
+                    console.log(chalk.green('-----After Insert-----'));
+                    query = "select * from bamazon.products";
+                    runQuery(query, updateObj, true, connectionEnd);
                 });
                 break;
             case "Exit":
