@@ -70,7 +70,15 @@ promptCustomer = function() {
 
                     console.log(chalk.green(' -> Total Order Amount: ' + changeItemQty * item_price));
 
-                    connectionEnd();
+                    connection.query('update bamazon.products set product_sales = product_sales +' + changeItemQty * item_price + ' where ?', [{
+                        item_id: changeItem
+                    }], function(error, result, fields) {
+                        if (error) throw error;
+
+                        console.log(chalk.blue('Product Sales Updated'))
+                        connectionEnd();
+                    })
+
                 })
             }
         });

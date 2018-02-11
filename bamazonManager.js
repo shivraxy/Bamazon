@@ -15,7 +15,6 @@ connectionEnd = function() {
     connection.end();
 }
 
-
 connection.connect(function(error) {
     if (error) throw error;
     console.log('Connection Established')

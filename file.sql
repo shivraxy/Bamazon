@@ -11,7 +11,12 @@ create table products
     primary key(item_id)
 );
 
-select * from bamazon.products;
+alter table bamazon.products
+modify product_sales decimal(65,2) default 0;
+
+
+
+
 
 insert into bamazon.products(product_name,department_name,price,stock_quantity)
 values ('Kindle','Devices',99.80,1000);
@@ -25,5 +30,36 @@ values ('Cloud Cam','Devices',99.99,10000);
 
 insert into bamazon.products(product_name,department_name,price,stock_quantity)
 values ('Echo Show','Devices',179.99,100);
+
+select IFNULL(SUM(stock_quantity),0), price stock_quantity 
+from bamazon.products
+where item_id = '1';
+
+
+create table departments
+(
+department_id integer(100) auto_increment not null,
+department_name varchar(100),
+over_head_costs  decimal(10,2),
+primary key(department_id)
+);
+
+
+insert into bamazon.departments(department_name,over_head_costs)
+values
+('Google',100000.00);
+
+
+select dept.department_id, dept.department_name, dept.over_head_costs, sum(prod.product_sales) product_sales , greatest(sum(prod.product_sales) - dept.over_head_costs,0)  total_profit
+from bamazon.products prod
+right outer join bamazon.departments dept on dept.department_name = prod.department_name 
+group by dept.department_id, dept.department_name, dept.over_head_costs;
+
+
+select * from bamazon.departments;
+
+
+
+
 
 
