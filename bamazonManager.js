@@ -22,7 +22,6 @@ connection.connect(function(error) {
     managerInput();
 });
 
-
 managerInput = function() {
 
     process.stdout.write('\x1Bc');
